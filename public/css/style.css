@@ -1,0 +1,43 @@
+.navbar {
+  background-color: white !important;
+  color: black;
+  font-weight: 500 !important;
+  height: 4rem;
+}
+
+.fa-place-of-worship {
+  color: rgb(232, 25, 72);
+}
+
+.f-info {
+  display: flex;
+  height: 8rem;
+  background-color: aliceblue;
+  flex-direction: column;
+}
+
+.f-info-socials {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: 3rem;
+  align-items: center;
+}
+
+.f-info a {
+  color: #222222;
+  text-decoration: none;
+}
+
+.f-info-socials a {
+  font-size: 1.5rem;
+  margin: 0.5rem;
+}
+
+.f-info-brand {
+  text-align: center;
+}
+
+.f-info-brand a:hover {
+  text-decoration: underline;
+}

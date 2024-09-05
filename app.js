@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const connectDB = require("./DBConnection");
 const express = require("express");
 const port = 3000;
@@ -5,32 +6,34 @@ const app = express();
 const Listing = require("./Models/listing");
 const initListing = require("./init");
 const path = require("path");
-const methodOverride = require('method-override');
+const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
+
+app.engine("ejs", ejsMate);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(methodOverride('_method')); 
+app.use(methodOverride("_method"));
 
+// serve the static files - public dir
+app.use(express.static(path.join(__dirname, "/public")));
 
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "/views")); 
 
-app.get("/", (req, res) => {
-  res.send("ROOT");
-});
 
-app.delete('/listings/:id', async (req, res) => {
+app.delete("/listings/:id", async (req, res) => {
   let { id } = req.params;
   let deletedListing = await Listing.findByIdAndDelete(id);
   console.log(deletedListing);
-  res.redirect('/listings');
-})
+  res.redirect("/listings");
+});
 
-app.get('/listings/:id/delete', async (req, res) => {
+app.get("/listings/:id/delete", async (req, res) => {
   let { id } = req.params;
   let listing = await Listing.findById(id);
   res.render("listings/delete.ejs", { listing });
-})
+});
 
 app.put("/listings/:id", async (req, res) => {
   let { id } = req.params;
@@ -66,6 +69,11 @@ app.get("/listings", async (req, res) => {
   let allListings = await Listing.find();
   res.render("listings/index.ejs", { allListings });
 });
+
+app.get("/", (req, res) => {
+  res.send("ROOT");
+});
+
 
 app.listen(port, () => {
   connectDB(); // connect DB Wanderlust
