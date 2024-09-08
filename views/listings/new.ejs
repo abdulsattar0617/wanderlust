@@ -1,39 +1,115 @@
 <% layout('/layouts/boilerplate') -%>
 <body>
-  <h3>Create New Listing</h3>
-  <form action="/listings" method="POST">
-    <input
-      type="text"
-      name="listing[title]"
-      placeholder="Title or Place name"
-    />
-    <br /><br />
-    <textarea
-      type="text"
-      name="listing[description]"
-      placeholder="Description..."
-    ></textarea
-    ><br /><br />
-    <input
-      type="text"
-      name="listing[image]"
-      placeholder="Image URL"
-    /><br /><br />
-    <input
-      type="number"
-      name="listing[price]"
-      placeholder="Price"
-    /><br /><br />
-    <input
-      type="text"
-      name="listing[location]"
-      placeholder="Location"
-    /><br /><br />
-    <input
-      type="text"
-      name="listing[country]"
-      placeholder="Country"
-    /><br /><br />
-    <button>ADD</button>
-  </form>
+  <div class="row">
+    <div class="col-8 offset-2">
+      <br />
+      <h3>Create New Listing</h3>
+      <form
+        action="/listings"
+        method="POST"
+        novalidate
+        class="needs-validation"
+      >
+        <!-- Title -->
+        <div>
+          <label for="listing-title" class="form-label">Title</label>
+          <input
+            type="text"
+            name="listing[title]"
+            placeholder="enter title or place name"
+            class="form-control"
+            id="listing-title"
+            required
+            autofocus
+          />
+          <div class="invalid-feedback">Please enter place name.</div>
+          <div class="valid-feedback">Title looks good!</div>
+        </div>
+        <br />
+        <!-- Description -->
+        <div>
+          <label for="listing-description" class="form-label"
+            >Description</label
+          >
+          <textarea
+            class="form-control"
+            id="listing-description"
+            type="text"
+            name="listing[description]"
+            placeholder="enter description"
+            required
+          ></textarea>
+          <div class="invalid-feedback">Please enter a short description.</div>
+          <div class="valid-feedback">Description looks good!</div>
+        </div>
+        <br />
+        <!-- Image URL -->
+        <div>
+          <label for="listing-image" class="form-label">Image URL</label>
+          <input
+            class="form-control"
+            type="text"
+            name="listing[image]"
+            placeholder="place image link"
+            id="listing-image"
+          />
+        </div>
+
+        <br />
+
+        <div class="row">
+          <!-- Price -->
+          <div class="col-md-4">
+            <label for="listing-price" class="form-label">Price</label>
+            <input
+              class="form-control"
+              type="number"
+              name="listing[price]"
+              placeholder="enter price"
+              id="listing-price"
+              required
+            />
+            <div class="invalid-feedback">Please enter price for a night.</div>
+            <div class="valid-feedback">Price looks good!</div>
+          </div>
+          <br />
+          <!-- Country -->
+          <br />
+          <div class="col-md-8">
+            <label for="listing-country" class="form-label">Country</label>
+            <input
+              class="form-control"
+              type="text"
+              name="listing[country]"
+              placeholder="enter place country"
+              id="listing-country"
+              required
+            />
+            <div class="invalid-feedback">Please enter the country name.</div>
+            <div class="valid-feedback">Country looks good!</div>
+          </div>
+        </div>
+        <br />
+        <!-- Location -->
+        <div>
+          <label for="listing-location" class="form-label"> Location </label>
+          <input
+            class="form-control"
+            type="text"
+            name="listing[location]"
+            placeholder="enter location of the place"
+            id="listing-location"
+            required
+          />
+          <div class="invalid-feedback">Please enter the location.</div>
+          <div class="valid-feedback">Location looks good!</div>
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-dark form-btn">ADD</button>
+        <a href="/listings" class="btn btn-dark">Cancel</a>
+        <br /><br />
+      </form>
+    </div>
+  </div>
 </body>
