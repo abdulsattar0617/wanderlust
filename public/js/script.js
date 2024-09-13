@@ -2,8 +2,12 @@ const previewImgBox = document.getElementById("listing-image-box");
 const listingImageInput = document.getElementById("listing-image");
 const listingImagePreview = document.getElementById("listing-image-preview");
 const editForm = document.getElementById("edit-form");
+// const btnSubmitReview = document.getElementById('btn-submit-review');
+// const validationTextarea = document.getElementById('validationTextarea');
 
 console.log("i am from frontend");
+
+
 
 listingImageInput.addEventListener("change", (e) => {
   listingImagePreview.src = e.target.value;
@@ -44,4 +48,4 @@ setInterval(() => {
     );
   });
 })();
-// ----------- 
+// -----------
