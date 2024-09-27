@@ -6,7 +6,7 @@ const initData = require("./data");
 
 const initializeListings = async function () {
   connectDB();
-  
+
   let listingCount = (await Listing.find({})).length;
 
   if (!listingCount > 0) {
@@ -15,17 +15,21 @@ const initializeListings = async function () {
   }
 };
 
-const initListing = async function() {
+const initListing = async function () {
   connectDB();
-  await Listing.deleteMany({}); 
-  await Listing.insertMany(initData.data);
-  console.log('Listing data was initialized.');
-}
+  await Listing.deleteMany({});
 
+  initData.data = initData.data.map((listing) => ({
+    ...listing,
+    owner: "66edb3a56e85f677f83abf55",
+  }));
+
+  await Listing.insertMany(initData.data);
+  console.log("Listing data was initialized.");
+};
 
 // initializeListings();
 initListing();
 
-
-module.exports = initListing; 
+module.exports = initListing;
 // module.exports = initializeListings;

@@ -1,5 +1,6 @@
 const { ref } = require("joi");
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const Review = require("./review");
 
 const DEFAULT_IMAMGE_URL =
@@ -9,13 +10,15 @@ const DEFAULT_IMAMGE_URL =
 const listingSchema = new mongoose.Schema({
   title: {
     type: String,
-    require: true,
+    required: true,
   },
   description: String,
   image: {
-    type: String,
-    default: DEFAULT_IMAMGE_URL,
-    set: (v) => (v === "" ? DEFAULT_IMAMGE_URL : v),
+    url: String,
+    filename: String,
+    // type: String,
+    // default: DEFAULT_IMAMGE_URL,
+    // set: (v) => (v === "" ? DEFAULT_IMAMGE_URL : v),
   },
   price: {
     type: Number,
@@ -26,16 +29,20 @@ const listingSchema = new mongoose.Schema({
   country: String,
   reviews: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Review",
     },
   ],
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 // Delete review: post middle
 listingSchema.post("findOneAndDelete", async (listing) => {
   if (listing) {
-    await Review.deleteMany({ _id: { $in: listing.reviews } }); 
+    await Review.deleteMany({ _id: { $in: listing.reviews } });
   }
 });
 
