@@ -15,6 +15,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("./Models/user.js");
 require("dotenv").config();
+const MongoStore = require("connect-mongo");
 
 app.engine("ejs", ejsMate);
 app.use(express.urlencoded({ extended: true }));
@@ -27,23 +28,34 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
-app.get("/", (req, res) => {
-  res.send("ROOT");
+// session store
+const store = MongoStore.create({
+  mongoUrl: process.env.ATLASDB_URL,
+  crypto: {
+    secret: process.env.SECRET,
+  },
+  touchAfter: 24 * 3600,
 });
 
+store.on("error", (err) => {
+  console.log("ERROR in MONGO SESSION STORE", err);
+});
+
+// session options
+const sessionOptions = {
+  store,
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  },
+};
+
 // Session middleware
-app.use(
-  session({
-    secret: "mysupersecretkey",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-    },
-  })
-);
+app.use(session(sessionOptions));
 
 // Flash middleware
 app.use(flash());
@@ -71,6 +83,7 @@ app.use((req, res, next) => {
 app.use("/listings", listingsRoute);
 // Review route
 app.use("/listings/:id/reviews", reviewsRoute);
+
 // User route
 app.use("/", userRoute);
 
@@ -88,5 +101,5 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   connectDB(); // connect DB Wanderlust
 
-  console.log(`server listening on port ${port}...`); 
+  console.log(`server listening on port ${port}...`);
 });

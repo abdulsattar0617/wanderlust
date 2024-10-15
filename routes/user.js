@@ -29,4 +29,8 @@ router
     wrapAsync(userController.login)
   );
 
+router.route("/").get((req, res) => {
+  res.redirect("/listings");
+});
+
 module.exports = router;
