@@ -86,33 +86,52 @@ You can access the live version of the application here: [Wanderlust Live Demo](
 ## Project Structure (MVC)
 
 ```bash
-wanderlust/
+Wonderlust/
 │
-├── models/             # Data models (e.g., User, Property)
-│   ├── user.js
-│   └── property.js
+├── controllers/
+│   ├── listings.js
+│   ├── reviews.js
+│   └── users.js
 │
-├── views/              # EJS templates for front-end
-│   ├── home.ejs
-│   ├── property.ejs
-│   └── auth/           # Login, signup templates
+├── models/
+│   ├── listing.js
+│   ├── review.js
+│   └── user.js
 │
-├── controllers/        # Application logic (routes, handling requests)
-│   ├── userController.js
-│   └── propertyController.js
+├── views/
+│   ├── includes/
+│   │   ├── flash.ejs
+│   │   ├── footer.ejs
+│   │   └── navbar.ejs
+│   ├── layouts/
+│   │   └── boilerplate.ejs
+│   ├── listings/
+│   │   ├── delete.ejs
+│   │   ├── edit.ejs
+│   │   ├── error.ejs
+│   │   ├── index.ejs
+│   │   ├── new.ejs
+│   │   └── show.ejs
+│   └── users/
+│       ├── login.ejs
+│       └── signup.ejs
 │
-├── routes/             # Route definitions
-│   ├── index.js
-│   ├── userRoutes.js
-│   └── propertyRoutes.js
+├── public/
+│   ├── css/
+│   │   ├── rating.css
+│   │   └── style.css
+│   ├── js/
+│   │   └── script.js
 │
-├── public/             # Static files (CSS, images)
-│   ├── styles.css
-│   └── images/
+├── routes/
+│   ├── listing.js
+│   ├── review.js
+│   └── user.js
 │
-├── app.js              # Main application file
-├── package.json        # NPM dependencies and scripts
-└── .env                # Environment variables
+├── utils/
+│   ├── ExpressError.js
+│   ├── validateListing.js
+│   └── wrapAsync.js
 ```
 
 ## Contributing
